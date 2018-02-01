@@ -47,9 +47,9 @@ function _bot() {
 			{
 				replyMsg = '現在日幣匯率為：' + jp;
 			}
-      if (replyMsg == '') {
+      /* if (replyMsg == '') {
         replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
-      }
+      } */
 
       event.reply(replyMsg).then(function(data) {
         console.log(replyMsg);
