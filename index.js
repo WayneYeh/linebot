@@ -1,13 +1,6 @@
-const linebot = require('linebot');
-const express = require('express');
-const rp = require('request-promise');
-const bodyParser = require('body-parser');
-
-const SITE_NAME = '西屯';
-const aqiOpt = {
-    uri: "http://opendata2.epa.gov.tw/AQI.json",
-    json: true
-}; 
+var linebot = require('linebot');
+var express = require('express');
+var getJSON = require('get-json');
 
 const bot = linebot({
 	channelId: process.env.CHANNEL_ID,
@@ -15,74 +8,59 @@ const bot = linebot({
 	channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
-function readAQI(repos){
-    let data;
-    
-    for (i in repos) {
-        if (repos[i].SiteName == SITE_NAME) {
-            data = repos[i];
-            break;
-        }
-    }
+var timer;
+var pm = [];
+_getJSON();
 
-    return data;
+_bot();
+const app = express();
+const linebotParser = bot.parser();
+app.post('/', linebotParser);
+
+//因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
+var server = app.listen(process.env.PORT || 8080, function() {
+  var port = server.address().port;
+  console.log("App now running on port", port);
+});
+
+function _bot() {
+  bot.on('message', function(event) {
+    if (event.message.type == 'text') {
+      var msg = event.message.text;
+      var replyMsg = '';
+      if (msg.indexOf('PM2.5') != -1) {
+        pm.forEach(function(e, i) {
+          if (msg.indexOf(e[0]) != -1) {
+            replyMsg = e[0] + '的 PM2.5 數值為 ' + e[1];
+          }
+        });
+        if (replyMsg == '') {
+          replyMsg = '請輸入正確的地點';
+        }
+      }
+      if (replyMsg == '') {
+        replyMsg = '不知道「'+msg+'」是什麼意思 :p';
+      }
+
+      event.reply(replyMsg).then(function(data) {
+        console.log(replyMsg);
+      }).catch(function(error) {
+        console.log('error');
+      });
+    }
+  });
+
 }
 
-const app = express();
-app.set('view engine', 'ejs');
-
-const linebotParser = bot.parser();
-
-app.get('/',function(req,res){
-    rp(aqiOpt)
-    .then(function (repos) {
-        res.render('index', {AQI:readAQI(repos)});
-    })
-    .catch(function (err) {
-		res.send("無法取得空氣品質資料～");
+function _getJSON() {
+  clearTimeout(timer);
+  getJSON('http://opendata2.epa.gov.tw/AQX.json', function(error, response) {
+    response.forEach(function(e, i) {
+      pm[i] = [];
+      pm[i][0] = e.SiteName;
+      pm[i][1] = e['PM2.5'] * 1;
+      pm[i][2] = e.PM10 * 1;
     });
-});
-
-app.post('/linewebhook', linebotParser);
-
-bot.on('message', function (event) {
-	switch (event.message.type) {
-		case 'text':
-			switch (event.message.text) {
-				case '空氣':
-					let data;
-					rp(aqiOpt)
-					.then(function (repos) {
-						data = readAQI(repos);
-						event.reply(data.County + data.SiteName +
-						'\n\nPM2.5指數：'+ data["PM2.5_AVG"] + 
-					    '\n狀態：' + data.Status);
-					})
-					.catch(function (err) {
-						event.reply('無法取得空氣品質資料～');
-					});
-					break;
-
-				case 'Me':
-					event.source.profile().then(function (profile) {
-						return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
-					});
-					break;
-			}
-			break;
-		case 'sticker':
-			event.reply({
-				type: 'sticker',
-				packageId: 1,
-				stickerId: 1
-			});
-			break;
-		default:
-			event.reply('Unknow message: ' + JSON.stringify(event));
-			break;
-	}
-});
-
-app.listen(process.env.PORT || 80, function () {
-	console.log('LineBot is running.');
-});
+  });
+  timer = setInterval(_getJSON, 1800000); //每半小時抓取一次新資料
+}
