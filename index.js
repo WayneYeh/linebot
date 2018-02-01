@@ -13,7 +13,7 @@ const bot = linebot({
 var timer, timer2;
 var pm = [];
 var jp;
-//_getJSON();
+_getJSON();
 _japan();
 _bot();
 const app = express();
@@ -42,7 +42,7 @@ function _bot() {
           replyMsg = '請輸入正確的地點';
         }
 			}
-			if(msg.indexOf('日幣'))
+			if(msg.indexOf('日幣') != -1)
 			{
 				replyMsg = '現在日幣匯率為：' + jp;
 			}
