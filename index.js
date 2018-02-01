@@ -87,7 +87,7 @@ function _japan() {
       var target = $(".rate-content-sight.text-right.print_hide");
       console.log(target[15].children[0].data);
       jp = target[15].children[0].data;
-      if (jp < 0.265) {
+      if (jp < 0.29) {
         bot.push('使用者 ID', '現在日幣 ' + jp + '，下單囉！');
       }
       timer2 = setInterval(_japan, 120000);
