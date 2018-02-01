@@ -10,8 +10,9 @@ const bot = linebot({
 	channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
-var timer;
+var timer, timer2;
 var pm = [];
+var jp;
 _getJSON();
 _japan();
 _bot();
