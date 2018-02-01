@@ -1,6 +1,7 @@
 
 var linebot = require('linebot');
 var express = require('express');
+var cheerio = require("cheerio");
 var getJSON = require('get-json');
 
 const bot = linebot({
@@ -12,7 +13,7 @@ const bot = linebot({
 var timer;
 var pm = [];
 _getJSON();
-
+_japan();
 _bot();
 const app = express();
 const linebotParser = bot.parser();
@@ -39,7 +40,11 @@ function _bot() {
         if (replyMsg == '') {
           replyMsg = '請輸入正確的地點';
         }
-      }
+			}
+			if(msg.indexOf('日幣'))
+			{
+				replyMsg = '現在日幣匯率為：' + jp;
+			}
       if (replyMsg == '') {
         replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
       }
@@ -66,4 +71,25 @@ function _getJSON() {
     });
   });
   timer = setInterval(_getJSON, 1800000); //每半小時抓取一次新資料
+}
+
+function _japan() {
+  clearTimeout(timer2);
+  request({
+    url: "http://rate.bot.com.tw/Pages/Static/UIP003.zh-TW.htm",
+    method: "GET"
+  }, function(error, response, body) {
+    if (error || !body) {
+      return;
+    } else {
+      var $ = cheerio.load(body);
+      var target = $(".rate-content-sight.text-right.print_hide");
+      console.log(target[15].children[0].data);
+      jp = target[15].children[0].data;
+      if (jp < 0.265) {
+        bot.push('使用者 ID', '現在日幣 ' + jp + '，下單囉！');
+      }
+      timer2 = setInterval(_japan, 120000);
+    }
+  });
 }
