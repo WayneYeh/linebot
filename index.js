@@ -3,6 +3,7 @@ var linebot = require('linebot');
 var express = require('express');
 var cheerio = require("cheerio");
 var getJSON = require('get-json');
+var request = require("request");
 
 const bot = linebot({
   channelId: process.env.CHANNEL_ID,
@@ -87,7 +88,7 @@ function _japan() {
       var target = $(".rate-content-sight.text-right.print_hide");
       console.log(target[15].children[0].data);
       jp = target[15].children[0].data;
-      if (jp < 0.29) {
+      if (jp < 0.27) {
         bot.push('使用者 ID', '現在日幣 ' + jp + '，下單囉！');
       }
       timer2 = setInterval(_japan, 120000);
