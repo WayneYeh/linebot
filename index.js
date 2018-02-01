@@ -13,7 +13,7 @@ const bot = linebot({
 var timer, timer2;
 var pm = [];
 var jp;
-_getJSON();
+//_getJSON();
 _japan();
 _bot();
 const app = express();
