@@ -41,7 +41,7 @@ function _bot() {
         }
       }
       if (replyMsg == '') {
-        replyMsg = '不知道「'+msg+'」是什麼意思 :p';
+        replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
       }
 
       event.reply(replyMsg).then(function(data) {
