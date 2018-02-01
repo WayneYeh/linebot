@@ -32,7 +32,8 @@ function _bot() {
       if (msg.indexOf('PM2.5') != -1) {
         pm.forEach(function(e, i) {
           if (msg.indexOf(e[0]) != -1) {
-            replyMsg = e[0] + '的 PM2.5 數值為 ' + e[1];
+						replyMsg = e[0] + '的 PM2.5 數值為 ' + e[1] +
+						'\n狀態：' + e[3];
           }
         });
         if (replyMsg == '') {
@@ -60,7 +61,8 @@ function _getJSON() {
       pm[i] = [];
       pm[i][0] = e.SiteName;
       pm[i][1] = e['PM2.5'] * 1;
-      pm[i][2] = e.PM10 * 1;
+			pm[i][2] = e.PM10 * 1;
+			pm[i][3] = e['Status'];
     });
   });
   timer = setInterval(_getJSON, 1800000); //每半小時抓取一次新資料
