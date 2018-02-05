@@ -47,7 +47,7 @@ function _bot() {
       // if (replyMsg == '') {
       //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
       // }
-      if(replyMsg == (msg.indexOf('@us'))+ msg ){
+      if(msg.indexOf('@us') != -1 && replyMsg == ''){
         replyMsg = '美金低於'+ msg + '會通知您';
       }
       
