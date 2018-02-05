@@ -45,7 +45,7 @@ function _bot() {
           replyMsg = '請輸入正確的地點';
         }
       }
-      if(msg.indexOf('@us ' + ttt + '') != -1)
+      if(msg.indexOf('@us ' + ttt) != -1)
 			{
 				replyMsg = '美金低於'+ ttt + '會通知您';
       }
