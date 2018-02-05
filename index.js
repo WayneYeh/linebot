@@ -44,8 +44,8 @@ function _bot() {
           replyMsg = '請輸入正確的地點';
         }
       }
-      if(replyMsg == ('@us' + (replyMsg == ttt))){
-        replyMsg = '美金低於'+ ttt + '會通知您';
+      if(replyMsg == '@us'+ msg){
+        replyMsg = '美金低於'+ msg + '會通知您';
       }
       else{
         replyMsg = 'qwertyuasdfggggg';
