@@ -44,14 +44,11 @@ function _bot() {
           replyMsg = '請輸入正確的地點';
         }
       }
-      /* if (replyMsg == '') {
-        replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
-      } */
-      if(replyMsg == '@us'){
-        replyMsg = '美金低於'+ msg + '會通知您';
+      if (replyMsg == '') {
+        replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
       }
-      else{
-        replyMsg = 'qwertyuasdfggggg';
+      if(replyMsg == (msg.indexOf('@us'))+ msg ){
+        replyMsg = '美金低於'+ msg + '會通知您';
       }
       
       if(msg.indexOf('美金') != -1)
