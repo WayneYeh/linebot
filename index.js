@@ -49,7 +49,7 @@ function _bot() {
       //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
       // }
       if(msg.indexOf('@us') != -1){
-        replyMsg = '美金低於'+ ttt + '會通知您';
+        replyMsg = '美金低於 '+ ttt + ' 會通知您';
       }
       if(msg.indexOf('美金') != -1)
 			{
@@ -125,11 +125,12 @@ function _getMoney() {
       eu = target[29].children[0].data;
       cn = target[37].children[0].data;
       if (us < ttt) {
-        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us + '，下單囉！');
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us +' 低於您所設定的 '+ ttt +' ，可以下手囉！');
       }
       if (jp < 0.265) {
         bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp + '，下單囉！');
       }
+      console.log(ttt);
       timer2 = setInterval(_getMoney, 120000);
     }
   });
