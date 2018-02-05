@@ -14,6 +14,7 @@ const bot = linebot({
 var timer, timer2;
 var pm = [];
 var jp, us, hk, gb, eu, cn;
+var ttt;
 _getJSON();
 _getMoney();
 _bot();
@@ -42,6 +43,10 @@ function _bot() {
         if (replyMsg == '') {
           replyMsg = '請輸入正確的地點';
         }
+      }
+      if(msg.indexOf('$us ' + ttt) != -1)
+			{
+				replyMsg = '美金低於'+ ttt + '會通知您';
       }
       if(msg.indexOf('美金') != -1)
 			{
@@ -118,7 +123,7 @@ function _getMoney() {
       jp = target[15].children[0].data;
       eu = target[29].children[0].data;
       cn = target[37].children[0].data;
-      if (us < 29) {
+      if (us < ttt) {
         bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us + '，下單囉！');
       }
       if (jp < 0.265) {
