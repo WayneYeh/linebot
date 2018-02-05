@@ -47,9 +47,7 @@ function _bot() {
       if(msg.indexOf('@us', ttt) != -1){
         replyMsg = '美金低於'+ ttt + '會通知您';
       }
-      else{
-        replyMsg = "wwwwwwwwwwwwww";
-      }
+      
       if(msg.indexOf('美金') != -1)
 			{
 				replyMsg = '現在美金匯率為：' + us;
