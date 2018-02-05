@@ -49,7 +49,7 @@ function _bot() {
       //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
       // }
       if(msg.indexOf('@us') != -1){
-        replyMsg = '美金低於'+ ttt + '會通知您';
+        replyMsg = '美金低於'+ msg + '會通知您';
       }
       if(msg.indexOf('美金') != -1)
 			{
