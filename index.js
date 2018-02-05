@@ -44,7 +44,10 @@ function _bot() {
           replyMsg = '請輸入正確的地點';
         }
       }
-      if(replyMsg == '@us'+ msg){
+      /* if (replyMsg == '') {
+        replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
+      } */
+      if(replyMsg == '@us'){
         replyMsg = '美金低於'+ msg + '會通知您';
       }
       else{
@@ -75,9 +78,7 @@ function _bot() {
 			{
 				replyMsg = '現在人民幣匯率為：' + cn;
 			}
-      /* if (replyMsg == '') {
-        replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
-      } */
+      
 
       event.reply(replyMsg).then(function(data) {
         console.log(replyMsg);
