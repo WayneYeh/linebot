@@ -33,7 +33,7 @@ function _bot() {
     if (event.message.type == 'text') {
       var msg = event.message.text;
       var replyMsg = '';
-      var ttt = msg.substring(4, 10);
+      //var ttt = msg.substring(4, 10);
       if (msg.indexOf('PM2.5') != -1) {
         pm.forEach(function(e, i) {
           if (msg.indexOf(e[0]) != -1) {
@@ -49,7 +49,7 @@ function _bot() {
       //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
       // }
       if(msg.indexOf('@us') != -1){
-        replyMsg = '美金低於 '+ ttt + ' 會通知您';
+        replyMsg = '美金低於 '+ msg.substring(4, 10); + ' 會通知您';
       }
       if(msg.indexOf('美金') != -1)
 			{
@@ -95,7 +95,11 @@ function _getJSON() {
       pm[i][0] = e.SiteName;
       pm[i][1] = e['PM2.5'] * 1;
 			pm[i][2] = e.PM10 * 1;
-			pm[i][3] = e['Status'];
+      pm[i][3] = e['Status'];
+      
+      if (e[1] > 5){
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', e[0] + '的PM2.5過高');
+      } 
     });
   });
   timer = setInterval(_getJSON, 1800000); //每半小時抓取一次新資料
@@ -130,7 +134,7 @@ function _getMoney() {
       if (jp < 0.265) {
         bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp + '，下單囉！');
       }
-      console.log(ttt);
+      console.log();
       timer2 = setInterval(_getMoney, 120000);
     }
   });
