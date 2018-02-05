@@ -33,6 +33,7 @@ function _bot() {
     if (event.message.type == 'text') {
       var msg = event.message.text;
       var replyMsg = '';
+      var ttt = replyMsg.substring(4, 10);
       if (msg.indexOf('PM2.5') != -1) {
         pm.forEach(function(e, i) {
           if (msg.indexOf(e[0]) != -1) {
@@ -47,10 +48,9 @@ function _bot() {
       // if (replyMsg == '') {
       //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
       // }
-      if(msg.indexOf('@us') != -1 && replyMsg == ttt){
+      if(msg.indexOf('@us') != -1){
         replyMsg = '美金低於'+ ttt + '會通知您';
       }
-      
       if(msg.indexOf('美金') != -1)
 			{
 				replyMsg = '現在美金匯率為：' + us;
