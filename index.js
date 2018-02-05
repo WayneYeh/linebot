@@ -13,9 +13,9 @@ const bot = linebot({
 
 var timer, timer2;
 var pm = [];
-var jp;
+var jp, usa;
 _getJSON();
-_japan();
+_getMoney;
 _bot();
 const app = express();
 const linebotParser = bot.parser();
@@ -42,6 +42,10 @@ function _bot() {
         if (replyMsg == '') {
           replyMsg = '請輸入正確的地點';
         }
+      }
+      if(msg.indexOf('美金') != -1)
+			{
+				replyMsg = '現在美金匯率為：' + usa;
 			}
 			if(msg.indexOf('日幣') != -1)
 			{
@@ -75,7 +79,7 @@ function _getJSON() {
   timer = setInterval(_getJSON, 1800000); //每半小時抓取一次新資料
 }
 
-function _japan() {
+function _getMoney() {
   clearTimeout(timer2);
   request({
     url: "http://rate.bot.com.tw/Pages/Static/UIP003.zh-TW.htm",
@@ -86,12 +90,18 @@ function _japan() {
     } else {
       var $ = cheerio.load(body);
       var target = $(".rate-content-sight.text-right.print_hide");
+      console.log(target[1].children[0].data);
       console.log(target[15].children[0].data);
+      usa = target[1].children[0].data;
       jp = target[15].children[0].data;
+      if (usa < 29) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + usa + '，下單囉！');
+      }
+
       if (jp < 0.265) {
         bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp + '，下單囉！');
       }
-      timer2 = setInterval(_japan, 120000);
+      timer2 = setInterval(_getMoney, 120000);
     }
   });
 }
