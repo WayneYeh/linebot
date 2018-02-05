@@ -13,9 +13,9 @@ const bot = linebot({
 
 var timer, timer2;
 var pm = [];
-var jp, usa;
+var jp, us, hk, gb, eu, cn;
 _getJSON();
-_getMoney;
+_getMoney();
 _bot();
 const app = express();
 const linebotParser = bot.parser();
@@ -45,11 +45,27 @@ function _bot() {
       }
       if(msg.indexOf('美金') != -1)
 			{
-				replyMsg = '現在美金匯率為：' + usa;
+				replyMsg = '現在美金匯率為：' + us;
 			}
-			if(msg.indexOf('日幣') != -1)
+			if(msg.indexOf('港幣') != -1)
+			{
+				replyMsg = '現在港幣匯率為：' + hk;
+      }
+      if(msg.indexOf('英鎊') != -1)
+			{
+				replyMsg = '現在英鎊匯率為：' + gb;
+      }
+      if(msg.indexOf('日幣') != -1)
 			{
 				replyMsg = '現在日幣匯率為：' + jp;
+      }
+      if(msg.indexOf('歐元') != -1)
+			{
+				replyMsg = '現在歐元匯率為：' + eu;
+      }
+      if(msg.indexOf('人民幣') != -1)
+			{
+				replyMsg = '現在人民幣匯率為：' + cn;
 			}
       /* if (replyMsg == '') {
         replyMsg = '不知道「'+msg+'」是什麼意思 ︿︿';
@@ -91,13 +107,20 @@ function _getMoney() {
       var $ = cheerio.load(body);
       var target = $(".rate-content-sight.text-right.print_hide");
       console.log(target[1].children[0].data);
+      console.log(target[3].children[0].data);
+      console.log(target[5].children[0].data);
       console.log(target[15].children[0].data);
-      usa = target[1].children[0].data;
+      console.log(target[29].children[0].data);
+      console.log(target[37].children[0].data);
+      us = target[1].children[0].data;
+      hk = target[3].children[0].data;
+      gb = target[5].children[0].data;
       jp = target[15].children[0].data;
-      if (usa < 29) {
-        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + usa + '，下單囉！');
+      eu = target[29].children[0].data;
+      cn = target[37].children[0].data;
+      if (us < 29) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us + '，下單囉！');
       }
-
       if (jp < 0.265) {
         bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp + '，下單囉！');
       }
