@@ -179,7 +179,7 @@ function _getMoney() {
       }
 
       console.log(jp_dollars);
-      timer2 = setInterval(_getMoney, 3600000);
+      timer2 = setInterval(_getMoney, 1800000); //每半小時抓取一次新資料
     }
   });
 }
