@@ -33,6 +33,7 @@ var server = app.listen(process.env.PORT || 8080, function() {
   console.log("App now running on port", port);
 });
 
+
 function _bot() {
   bot.on('message', function(event) {
     if (event.message.type == 'text') {
@@ -188,4 +189,4 @@ function _getMoney() {
 var http = require("http");
 setInterval(function() {
     http.get("http://linebot-test-test.herokuapp.com/");
-}, 300000); // every 5 minutes (300000)
+}, 600000); // every 10 minutes 
