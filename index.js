@@ -38,6 +38,7 @@ function _bot() {
   bot.on('message', function(event) {
     if (event.message.type == 'text') {
       var msg = event.message.text;
+      var msg_L = event.message.text.toLowerCase();
       var replyMsg = '';
       var us_dollar = msg.substring(4, 10);
       var gb_dollar = msg.substring(4, 10);
@@ -98,7 +99,7 @@ function _bot() {
       if(msg.indexOf('人民幣') != -1){
         replyMsg = '現在人民幣匯率為：' + cn;
       }
-      if (replyMsg == '@me'.toLowerCase()){
+      if (msg_L.indexOf('@me') != -1){
         event.source.profile().then(function (profile) {
           return event.reply('Hello, ' + profile.displayName + ' ' + profile.userId);
         });
