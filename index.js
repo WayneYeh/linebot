@@ -98,7 +98,7 @@ function _bot() {
       if(msg.indexOf('人民幣') != -1){
         replyMsg = '現在人民幣匯率為：' + cn;
       }
-      if (msg.indexOf('@me'.toLowerCase) != -1){
+      if (msg.indexOf('@me'.toLowerCase()) != -1){
         event.source.profile().then(function (profile) {
           return event.reply('Hello, ' + profile.displayName + ' ' + profile.userId);
         });
