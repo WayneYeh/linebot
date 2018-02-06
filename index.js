@@ -14,7 +14,7 @@ const bot = linebot({
 var timer, timer2;
 var pm = [];
 var jp, us, hk, gb, eu, cn;
-var ttt;
+var ttt, ttts;
 _getJSON();
 _getMoney();
 _bot();
@@ -74,8 +74,9 @@ function _bot() {
       if(msg.indexOf('人民幣') != -1)
 			{
 				replyMsg = '現在人民幣匯率為：' + cn;
-			}
+      }
       
+      ttts = ttt;
 
       event.reply(replyMsg).then(function(data) {
         console.log(replyMsg);
@@ -128,13 +129,14 @@ function _getMoney() {
       jp = target[15].children[0].data;
       eu = target[29].children[0].data;
       cn = target[37].children[0].data;
-      if (us < ttt) {
-        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us +' 低於您所設定的 '+ ttt +' ，可以下手囉！');
+      
+      if (us < ttts) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us +' 低於您所設定的 '+ ttts +' ，可以下手囉！');
       }
       if (jp < 0.265) {
         bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp + '，下單囉！');
       }
-      console.log();
+      console.log(ttts);
       timer2 = setInterval(_getMoney, 120000);
     }
   });
