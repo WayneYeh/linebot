@@ -13,8 +13,13 @@ const bot = linebot({
 
 var timer, timer2;
 var pm = [];
-var jp, us, hk, gb, eu, cn;
-var ttt, ttts;
+var us, hk, gb, jp, eu, cn;
+var us_dollar, us_dollars;
+var gb_dollar, gb_dollars;
+var hk_dollar, hk_dollars;
+var jp_dollar, jp_dollars;
+var eu_dollar, eu_dollars;
+var cn_dollar, cn_dollars;
 _getJSON();
 _getMoney();
 _bot();
@@ -33,7 +38,12 @@ function _bot() {
     if (event.message.type == 'text') {
       var msg = event.message.text;
       var replyMsg = '';
-      var ttt = msg.substring(4, 10);
+      var us_dollar = msg.substring(4, 10);
+      var gb_dollar = msg.substring(4, 10);
+      var hk_dollar = msg.substring(4, 10);
+      var jp_dollar = msg.substring(4, 10);
+      var eu_dollar = msg.substring(4, 10);
+      var cn_dollar = msg.substring(4, 10);
       if (msg.indexOf('PM2.5') != -1) {
         pm.forEach(function(e, i) {
           if (msg.indexOf(e[0]) != -1) {
@@ -45,39 +55,58 @@ function _bot() {
           replyMsg = '請輸入正確的地點';
         } 
       }
-      // if (replyMsg == '') {
-      //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
-      // }
+      
       if(msg.indexOf('@us') != -1){
-        replyMsg = '美金低於 '+ ttt + ' 會通知您';
+        replyMsg = '美金低於 '+ us_dollar + ' 會通知您';
       }
       if(msg.indexOf('美金') != -1)
 			{
 				replyMsg = '現在美金匯率為：' + us;
-			}
+      }
+      if(msg.indexOf('@hk') != -1){
+        replyMsg = '港幣低於 '+ hk_dollar + ' 會通知您';
+      }
 			if(msg.indexOf('港幣') != -1)
 			{
 				replyMsg = '現在港幣匯率為：' + hk;
+      }
+      if(msg.indexOf('@gb') != -1){
+        replyMsg = '英鎊低於 '+ gb_dollar + ' 會通知您';
       }
       if(msg.indexOf('英鎊') != -1)
 			{
 				replyMsg = '現在英鎊匯率為：' + gb;
       }
+      if(msg.indexOf('@jp') != -1){
+        replyMsg = '日幣低於 '+ jp_dollar + ' 會通知您';
+      }
       if(msg.indexOf('日幣') != -1)
 			{
 				replyMsg = '現在日幣匯率為：' + jp;
+      }
+      if(msg.indexOf('@eu') != -1){
+        replyMsg = '歐元低於 '+ eu_dollar + ' 會通知您';
       }
       if(msg.indexOf('歐元') != -1)
 			{
 				replyMsg = '現在歐元匯率為：' + eu;
       }
-      if(msg.indexOf('人民幣') != -1)
-			{
-				replyMsg = '現在人民幣匯率為：' + cn;
+      if(msg.indexOf('@cn') != -1){
+        replyMsg = '人民幣低於 '+ cn_dollar + ' 會通知您';
+      }
+      if(msg.indexOf('人民幣') != -1){
+        replyMsg = '現在人民幣匯率為：' + cn;
       }
       
-      ttts = ttt;
-
+      us_dollars = us_dollar;
+      gb_dollars = gb_dollar;
+      hk_dollars = hk_dollar;
+      jp_dollars = jp_dollar;
+      eu_dollars = eu_dollar;
+      cn_dollars = cn_dollar;
+      // if (replyMsg == '') {
+      //   replyMsg = '不知道「'+ msg +'」是什麼意思 ︿︿';
+      // }
       event.reply(replyMsg).then(function(data) {
         console.log(replyMsg);
       }).catch(function(error) {
@@ -130,14 +159,27 @@ function _getMoney() {
       eu = target[29].children[0].data;
       cn = target[37].children[0].data;
       
-      if (us < ttts) {
-        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us +' 低於您所設定的 '+ ttts +' ，可以下手囉！');
+      if (us < us_dollars) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在美金 ' + us +' 低於您所設定的 '+ us_dollars +' ，可以下手囉！');
       }
-      if (jp < 0.265) {
-        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp + '，下單囉！');
+      if (hk < hk_dollars) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在港幣 ' + hk +' 低於您所設定的 '+ hk_dollars +' ，可以下手囉！');
       }
-      console.log(ttts);
-      timer2 = setInterval(_getMoney, 120000);
+      if (gb < gb_dollars) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在英鎊 ' + gb +' 低於您所設定的 '+ gb_dollars +' ，可以下手囉！');
+      }
+      if (jp < jp_dollars) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在日幣 ' + jp +' 低於您所設定的 '+ jp_dollars +' ，可以下手囉！');
+      }
+      if (eu < eu_dollars) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在歐元 ' + eu +' 低於您所設定的 '+ eu_dollars +' ，可以下手囉！');
+      }
+      if (cn < cn_dollars) {
+        bot.push('Ud587af9ef7efbcdce047f367bad6e605', '現在人民幣 ' + cn +' 低於您所設定的 '+ cn_dollars +' ，可以下手囉！');
+      }
+
+      console.log(jp_dollars);
+      timer2 = setInterval(_getMoney, 3600000);
     }
   });
 }
